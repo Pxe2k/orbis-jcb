@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\{
-    ServiceApplication
+use Illuminate\Http\File;
+
+use App\Models\{
+    ServiceApplication,
+    CareerApplication,
 };
 
 class ApplicationController extends Controller
 {
     public function serviceApplicationCreate(Request $request)
     {
-        // $fields = $request->validate([
-        //     'name' => 'required|string',
-        //     'phone' =>'required|string',
-        // ]);
+        $fields = $request->validate([
+            'fullName' => 'required|string',
+            'phoneNumber' => 'required|string',
+            'email' => 'required|string',
+            'address' => 'string',
+            'address2' => 'string',
+            'city' => 'string',
+            'state' => 'string',
+            'zipCode' => 'string',
+            'compaanyId' => 'required|int',
+            'productId' => 'required|int',
+            'year' => 'required|string',
+            'location' => 'required|string',
+            'comment' => 'string',
+        ]);
 
         $application = ServiceApplication::create([
             'fullName' => $fields ['fullName'],
@@ -26,11 +40,41 @@ class ApplicationController extends Controller
             'city' => $fields ['city'],
             'state' => $fields ['state'],
             'zipCode' => $fields ['zipCode'],
-            'manufacturer' => $fields ['manufacturer'],
-            'model' => $fields ['model'],
+            'compaany_id' => $fields ['compaanyId'],
+            'product_id' => $fields ['productId'],
             'year' => $fields ['year'],
             'location' => $fields ['location'],
             'comment' => $fields ['comment']]);
+
+        $response = [
+            'application' => $application,
+        ];
+
+        return response($response, 201);
+    }
+
+    public function careerApplicationCreate(Request $request)
+    {
+        $file = $request->file('file');
+        $path = $file->store('uploads');
+
+        $fields = $request->validate([
+            'fullName' => 'required|string',
+            'email' => 'required|string',
+            'phoneNumber' => 'required|string',
+            'position' => 'string',
+            'comment' => 'string',
+
+        ]);
+
+        $application = CareerApplication::create([
+            'fullName' => $fields ['fullName'],
+            'email' => $fields ['email'],
+            'phoneNumber' => $fields ['phoneNumber'],
+            'position' => $fields ['position'],
+            'comment' => $fields ['comment'],
+            'file' => $path,
+        ]);
 
         $response = [
             'application' => $application,

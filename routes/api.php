@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     MainController,
     ShopController,
-    CartController,    
+    CartController,
+    ApplicationController,    
 };
 
 /*
@@ -34,8 +35,14 @@ Route::group(['prefix' => 'catalog'], function () {
     Route::get('/category/{category}',[ShopController::class, 'getCategory']);
     Route::get('/subcategory/{subcategory}',[ShopController::class, 'getSubcategory']);
     Route::get('/product/{product}',[ShopController::class, 'getProduct']);
+    Route::get('/filter', [ShopController::class, 'filterProducts']);
 });
 
 Route::group(['prefix' => 'cart'], function () {
     Route::post('/store', [CartController::class, 'store']);
+});
+
+Route::group(['prefix' => 'application'], function () {
+    Route::post('/service', [ApplicationController::class, 'serviceApplicationCreate']);
+    Route::post('/career', [ApplicationController::class, 'careerApplicationCreate']);
 });

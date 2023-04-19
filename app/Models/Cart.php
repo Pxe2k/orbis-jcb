@@ -12,5 +12,7 @@ class Cart extends Model
         'email',
         'phoneNumber',
         'total_price',
+        'fullName',
+        'companyName'
     ];
 }
