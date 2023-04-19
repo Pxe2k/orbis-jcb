@@ -43,7 +43,7 @@ class ShopController extends Controller
     public function getProduct(Product $product)
     {
         $products = Product::where('id', $product->id)->get();
-        
+
         return response ([
             'product' => $product,
         ],200);
@@ -88,6 +88,20 @@ class ShopController extends Controller
 
         return response ([
             'products' => $products,
-        ],200);        
+        ],200);
+    }
+
+    public function getProductsByIds($ids)
+    {
+        // Convert the comma-separated IDs string to an array
+        $idsArray = explode(',', $ids);
+
+        // Query the Product model for the products with the given IDs
+        $products = Product::whereIn('id', $idsArray)->get();
+
+        // Return the products in the response
+        return response ([
+            'products' => $products,
+        ],200);
     }
 }
