@@ -34,7 +34,7 @@ class ShopController extends Controller
 
         $query = DB::table('products')
             ->join('companies', 'products.company_id', '=', 'companies.id')
-            ->select('products.*', 'companies.name as companyName', 'companies.image as companyImage');
+            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage');
 
         if ($category_id) {
             $query->where('category_id', $category_id);
