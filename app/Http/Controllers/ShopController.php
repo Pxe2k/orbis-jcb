@@ -82,6 +82,7 @@ class ShopController extends Controller
         $products = Product::whereIn('id', $idsArray)
             ->with('company')
             ->with('category')
+            ->with('subcategory')
             ->get();
 
         return response([
