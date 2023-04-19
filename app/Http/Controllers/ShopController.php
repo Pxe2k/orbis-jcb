@@ -92,7 +92,11 @@ class ShopController extends Controller
 
     public function allCompanies()
     {
-        $companies = Company::with('products')->get();
+        $companies = Company::with([
+            'products' => function ($query) {
+                $query->with('category')->with('subcategory')->with('company');
+            }
+        ])->get();
 
         return response([
             'companies' => $companies,
