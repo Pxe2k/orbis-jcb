@@ -33,18 +33,13 @@ class ShopController extends Controller
         $max_price = $request->input('max_price');
         $min_year = $request->input('min_year');
         $max_year = $request->input('max_year');
-        $keywords = $request->input('keywords');
-
+        $search = $request->input('search');
 
         $query = DB::table('products')
             ->join('companies', 'products.company_id', '=', 'companies.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage')
-            ->select('products.*', 'categories.title as category');
+            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage', 'categories.title as categoryTitle');
 
-        if ($keywords) {
-            $query->where('title', 'like', $keywords);
-        }
         if ($category_id) {
             $query->where('category_id', $category_id);
         }
@@ -71,13 +66,19 @@ class ShopController extends Controller
         } elseif ($max_year) {
             $query->where('year', '<=', $max_year);
         }
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'LIKE', "%$search%")
+                    ->orWhere('description', 'LIKE', "%$search%");
+            });
+        }
+
         $products = $query->get();
 
         return response ([
             'products' => $products,
         ],200);
     }
-
 
     public function getProductsByIds($ids)
     {
