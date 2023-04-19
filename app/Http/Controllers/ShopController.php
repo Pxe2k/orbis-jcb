@@ -31,27 +31,32 @@ class ShopController extends Controller
         $company_id = $request->input('company_id');
         $min_price = $request->input('min_price');
         $max_price = $request->input('max_price');
+        $min_year = $request->input('min_year');
+        $max_year = $request->input('max_year');
+        $keywords = $request->input('keywords');
+
 
         $query = DB::table('products')
             ->join('companies', 'products.company_id', '=', 'companies.id')
-            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage');
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage')
+            ->select('products.*', 'categories.title as category');
 
+        if ($keywords) {
+            $query->where('title', 'like', $keywords);
+        }
         if ($category_id) {
             $query->where('category_id', $category_id);
         }
-
         if ($subcategory_id) {
             $query->where('subcategory_id', $subcategory_id);
         }
-
         if ($catalog_type_id) {
             $query->where('catalog_type_id', $catalog_type_id);
         }
-
         if ($company_id) {
             $query->where('company_id', $company_id);
         }
-
         if ($min_price && $max_price) {
             $query->whereBetween('price', [$min_price, $max_price]);
         } elseif ($min_price) {
@@ -59,7 +64,13 @@ class ShopController extends Controller
         } elseif ($max_price) {
             $query->where('price', '<=', $max_price);
         }
-
+        if ($min_year && $max_year) {
+            $query->whereBetween('year', [$min_year, $max_year]);
+        } elseif ($min_year) {
+            $query->where('year', '>=', $min_year);
+        } elseif ($max_year) {
+            $query->where('year', '<=', $max_year);
+        }
         $products = $query->get();
 
         return response ([
