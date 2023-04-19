@@ -32,7 +32,9 @@ class ShopController extends Controller
         $min_price = $request->input('min_price');
         $max_price = $request->input('max_price');
 
-        $query = DB::table('products')->with('company');
+        $query = DB::table('products')
+            ->join('companies', 'products.company_id', '=', 'companies.id')
+            ->select('products.*', 'companies.name as companyName', 'companies.image as companyImage');
 
         if ($category_id) {
             $query->where('category_id', $category_id);
@@ -64,6 +66,7 @@ class ShopController extends Controller
             'products' => $products,
         ],200);
     }
+
 
     public function getProductsByIds($ids)
     {
