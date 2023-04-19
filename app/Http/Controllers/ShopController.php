@@ -68,7 +68,7 @@ class ShopController extends Controller
         }
         if ($search) {
             $query->where(function($q) use ($search) {
-                $q->where('title', 'LIKE', "%$search%")
+                $q->where('products.title', 'LIKE', "%$search%")
                     ->orWhere('description', 'LIKE', "%$search%");
             });
         }
