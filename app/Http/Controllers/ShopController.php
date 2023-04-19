@@ -90,12 +90,12 @@ class ShopController extends Controller
         ],200);
     }
 
-    public function allCompanies ()
+    public function allCompanies()
     {
-        $companies = Company::all();
+        $companies = Company::with('products')->get();
 
         return response([
-            'companies' => $companies
+            'companies' => $companies,
         ]);
     }
 
