@@ -31,10 +31,9 @@ Route::group(['prefix' => 'pages'], function () {
 });
 
 Route::group(['prefix' => 'catalog'], function () {
-    Route::get('/type/{catalogType}', [ShopController::class, 'getCatalogType']);
-    Route::get('/category/{category}',[ShopController::class, 'getCategory']);
-    Route::get('/subcategory/{subcategory}',[ShopController::class, 'getSubcategory']);
     Route::get('/product/{product}',[ShopController::class, 'getProduct']);
+    Route::get('/companies', [ShopController::class, 'allCompanies']);
+    Route::get('/categories', [ShopController::class, 'getAllCategoriesWithSubcategories']);
     Route::get('/filter', [ShopController::class, 'filterProducts']);
     Route::get('/products/{ids}', [ShopController::class, 'getProductsByIds']);
 });
