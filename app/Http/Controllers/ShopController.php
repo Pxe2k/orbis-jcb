@@ -22,7 +22,6 @@ class ShopController extends Controller
             'product' => $productWithCompany,
         ], 200);
     }
-
     public function filterProducts(Request $request)
     {
         $category_id = $request->input('category_id');
@@ -35,10 +34,7 @@ class ShopController extends Controller
         $max_year = $request->input('max_year');
         $search = $request->input('search');
 
-        $query = DB::table('products')
-            ->join('companies', 'products.company_id', '=', 'companies.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*', 'companies.title as companyName', 'companies.image as companyImage', 'categories.title as categoryTitle');
+        $query = Product::query();
 
         if ($category_id) {
             $query->where('category_id', $category_id);
@@ -68,14 +64,14 @@ class ShopController extends Controller
         }
         if ($search) {
             $query->where(function($q) use ($search) {
-                $q->where('products.title', 'LIKE', "%$search%")
+                $q->where('title', 'LIKE', "%$search%")
                     ->orWhere('description', 'LIKE', "%$search%");
             });
         }
 
-        $products = $query->get();
+        $products = $query->with('company', 'category')->get();
 
-        return response ([
+        return response([
             'products' => $products,
         ],200);
     }
@@ -83,9 +79,11 @@ class ShopController extends Controller
     public function getProductsByIds($ids)
     {
         $idsArray = explode(',', $ids);
-        $products = Product::whereIn('id', $idsArray)->get();
+        $products = Product::whereIn('id', $idsArray)
+            ->with('company')
+            ->get();
 
-        return response ([
+        return response([
             'products' => $products,
         ],200);
     }
