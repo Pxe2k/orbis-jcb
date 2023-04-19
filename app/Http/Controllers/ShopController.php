@@ -16,7 +16,7 @@ class ShopController extends Controller
 {
     public function getProduct(Product $product)
     {
-        $productWithCompany = Product::with('company')->where('id', $product->id)->first();
+        $productWithCompany = Product::with('company', 'category', 'subcategory')->where('id', $product->id)->first();
 
         return response([
             'product' => $productWithCompany,
@@ -69,7 +69,7 @@ class ShopController extends Controller
             });
         }
 
-        $products = $query->with('company', 'category')->get();
+        $products = $query->with('company','category', 'subcategory')->get();
 
         return response([
             'products' => $products,
@@ -81,6 +81,7 @@ class ShopController extends Controller
         $idsArray = explode(',', $ids);
         $products = Product::whereIn('id', $idsArray)
             ->with('company')
+            ->with('category')
             ->get();
 
         return response([
