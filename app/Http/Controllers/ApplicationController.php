@@ -16,6 +16,7 @@ class ApplicationController extends Controller
     {
         $fields = $request->validate([
             'fullName' => 'required|string',
+            'companyName' => 'string',
             'phoneNumber' => 'required|string',
             'email' => 'required|string',
             'address' => 'string',
