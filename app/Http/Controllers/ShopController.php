@@ -73,12 +73,6 @@ class ShopController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        if ($products->isEmpty()) {
-            return response([
-                'message' => 'Products not found',
-            ], 404);
-        }
-
         return response([
             'products' => $products,
         ],200);
