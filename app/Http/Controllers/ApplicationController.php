@@ -57,7 +57,9 @@ class ApplicationController extends Controller
     public function careerApplicationCreate(Request $request)
     {
         $file = $request->file('file');
-        $path = $file->store('uploads');
+        if ($file) {
+            $path = $file->store('uploads');
+        }
 
         $fields = $request->validate([
             'fullName' => 'required|string',
