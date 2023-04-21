@@ -46,4 +46,5 @@ Route::group(['prefix' => 'application'], function () {
     Route::post('/service', [ApplicationController::class, 'serviceApplicationCreate']);
     Route::post('/career', [ApplicationController::class, 'careerApplicationCreate']);
     Route::post('/price', [ApplicationController::class, 'priceApplicationCreate']);
+    Route::post('/appointment', [ApplicationController::class, 'appointmentApplicationCreate']);
 });
