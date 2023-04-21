@@ -71,6 +71,12 @@ class ShopController extends Controller
 
         $products = $query->with('company','category', 'subcategory')->get();
 
+        if ($products->isEmpty()) {
+            return response([
+                'message' => 'Products not found',
+            ], 404);
+        }
+
         return response([
             'products' => $products,
         ],200);
