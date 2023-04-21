@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('appointment', function (Blueprint $table) {
+        Schema::table('appointment_applications', function (Blueprint $table) {
             $table->string('fullName');
             $table->string('phoneNumber');
         });
