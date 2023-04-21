@@ -69,7 +69,9 @@ class ShopController extends Controller
             });
         }
 
-        $products = $query->with('company','category', 'subcategory')->get();
+        $products = $query->with('company','category', 'subcategory')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         if ($products->isEmpty()) {
             return response([
@@ -89,6 +91,7 @@ class ShopController extends Controller
             ->with('company')
             ->with('category')
             ->with('subcategory')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return response([
