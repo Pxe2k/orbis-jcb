@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\{
+    HeaderContact,
     Banner,
     AboutUs,
     Company,
@@ -18,6 +19,7 @@ use App\Models\{
 class MainController extends Controller
 {
     public function index(Request $request) {
+        $header = HeaderContact::all();
         $banners = Banner::all();
         $aboutUs = AboutUs::first();
         $companies = Company::all();
@@ -32,6 +34,7 @@ class MainController extends Controller
         ];
 
         $response = [
+            'headers' => $header,
             'banners' => $banners,
             'aboutUs' => $aboutUs,
             'companies' => $companies,
