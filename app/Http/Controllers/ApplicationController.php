@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 
-use App\Models\{
-    ServiceApplication,
-    CareerApplication,
-    PriceApplication,
-};
+use App\Models\{AppointmentApplication, ServiceApplication, CareerApplication, PriceApplication};
 
 class ApplicationController extends Controller
 {
@@ -120,6 +116,23 @@ class ApplicationController extends Controller
             'year' => $fields ['year'],
             'location' => $fields ['location'],
             'comment' => $fields ['comment']]);
+
+        $response = [
+            'application' => $application,
+        ];
+
+        return response($response, 201);
+    }
+
+    public function appointmentApplicationCreate(Request $request)
+    {
+        $fields = $request->validate([
+            'date' => 'required|string',
+        ]);
+
+        $application = AppointmentApplication::create([
+            'date' => $fields ['date'],
+        ]);
 
         $response = [
             'application' => $application,
