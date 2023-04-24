@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
+            $table->foreignId('cart_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('product_id')->nullable()->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

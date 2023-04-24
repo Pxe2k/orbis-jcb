@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image');
+            $table->integer('price')->nullable();
             $table->string('condition');
             $table->string('stockNumber');
             $table->string('serial');
@@ -28,6 +29,10 @@ return new class extends Migration
             $table->string('netHorsepower');
             $table->string('weight');
             $table->boolean('available');
+            $table->foreignId('category_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('subcategory_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('catalog_type_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('company_id')->nullable()->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('zipCode')->nullable();
-            $table->foreignId('company_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('company_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('product_id')->nullable()->onUpdate('cascade')->onDelete('set null');
             $table->string('year');
             $table->string('location');
             $table->timestamps();

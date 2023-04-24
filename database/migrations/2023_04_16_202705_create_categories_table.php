@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image');
-            $table->foreignId('catalog_type_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('company_id')->constrained()->onDelete('cascade')->nullable();
+            $table->string('icon');
+            $table->foreignId('catalog_type_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('company_id')->nullable()->onUpdate('cascade')->onDelete('set null');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
