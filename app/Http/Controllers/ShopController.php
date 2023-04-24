@@ -108,7 +108,7 @@ class ShopController extends Controller
 
     public function getCategoriesByCompanies(Company $company)
     {
-        $company = Company::where('id', $company->id)->with('categories')->get();
+        $company = Company::where('id', $company->id)->with('categories')->first();
 
         return response([
             'company' => $company
