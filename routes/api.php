@@ -32,6 +32,7 @@ Route::group(['prefix' => 'pages'], function () {
 
 Route::group(['prefix' => 'catalog'], function () {
     Route::get('/product/{product}',[ShopController::class, 'getProduct']);
+    Route::get('/company/{company}',[ShopController::class, 'getCategoriesByCompanies']);
     Route::get('/companies', [ShopController::class, 'allCompanies']);
     Route::get('/categories', [ShopController::class, 'getAllCategoriesWithSubcategories']);
     Route::get('/filter', [ShopController::class, 'filterProducts']);

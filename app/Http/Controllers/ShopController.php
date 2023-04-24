@@ -106,6 +106,15 @@ class ShopController extends Controller
         ]);
     }
 
+    public function getCategoriesByCompanies(Company $company)
+    {
+        $company = Company::where('id', $company->id)->with('categories')->get();
+
+        return response([
+            'company' => $company
+        ]);
+    }
+
     public function getAllCategoriesWithSubcategories()
     {
         $categories = Category::with('subcategories')->get();
