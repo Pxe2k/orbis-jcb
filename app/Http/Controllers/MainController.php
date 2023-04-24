@@ -26,7 +26,6 @@ class MainController extends Controller
         foreach ($companies as $company) {
             $company->categories = Category::where('company_id', $company->id)->get();
         }
-        $warehouseEquipments = WarehouseEquipment::all();
 
         $footer = [
             'contacts' => Contact::all(),
@@ -38,7 +37,6 @@ class MainController extends Controller
             'banners' => $banners,
             'aboutUs' => $aboutUs,
             'companies' => $companies,
-            'warehouseEquipments' => $warehouseEquipments,
             'footer' => $footer
         ];
 
