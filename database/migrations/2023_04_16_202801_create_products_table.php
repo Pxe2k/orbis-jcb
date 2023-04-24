@@ -29,10 +29,6 @@ return new class extends Migration
             $table->string('netHorsepower');
             $table->string('weight');
             $table->boolean('available');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('subcategory_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('catalog_type_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('company_id')->constrained()->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }
